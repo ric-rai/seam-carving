@@ -1,5 +1,5 @@
 # Seam Carving -algoritmi
-####_eli sisältötietoinen kuvan skaalaus_ 
+#### _eli sisältötietoinen kuvan skaalaus_
 ###### Helsingin yliopiston Aineopintojen harjoitustyö: Tietorakenteet ja algoritmit
 
 ## Dokumentaatio
