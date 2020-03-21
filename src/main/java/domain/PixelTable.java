@@ -11,7 +11,13 @@ public class PixelTable extends ArrayTable<Pixel> {
 
     public PixelTable(BufferedImage image) {
         super(Pixel.class, image.getWidth(), image.getHeight());
-        if (image.getType() == 	TYPE_3BYTE_BGR) setFrom_3BYTE_BGR(image);
+        switch (image.getType()) {
+            case TYPE_3BYTE_BGR: setTableFrom_3BYTE_BGR(image); break;
+            default: setTableByUsingGeneralMethod(image);
+        }
+    }
+
+    private void setTableByUsingGeneralMethod(BufferedImage image) {
         System.out.println("Reading pixel data using the general method. It may take a while...");
         mapIndexed((x, y) -> {
             int color = image.getRGB(x, y);
@@ -22,7 +28,7 @@ public class PixelTable extends ArrayTable<Pixel> {
         });
     }
 
-    private void setFrom_3BYTE_BGR(BufferedImage image) {
+    private void setTableFrom_3BYTE_BGR(BufferedImage image) {
         System.out.println("Reading pixel data from 3BYTE_BGR image");
         byte[] bytes = ((DataBufferByte)image.getData().getDataBuffer()).getData();
         for (int row = 0; row < height; row++)
