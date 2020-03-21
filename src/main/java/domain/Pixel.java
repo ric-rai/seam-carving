@@ -5,6 +5,12 @@ public class Pixel {
 
     public Pixel() {}
 
+    public Pixel(int red, int green, int blue) {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+    }
+
     public Pixel(byte red, byte green, byte blue) {
         this.red = red & 0xff;
         this.green = green & 0xff;

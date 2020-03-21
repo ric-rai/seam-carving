@@ -1,50 +1,47 @@
 package domain;
 
-import java.awt.*;
+import data_structures.ArrayTable;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.util.ArrayList;
 
-public class PixelTable {
-    private ArrayList<ArrayList<Pixel>> pixels;
-    private int width, height;
+import static java.awt.image.BufferedImage.TYPE_3BYTE_BGR;
 
-    public PixelTable(Image image) {
-        BufferedImage bufferedImage = (BufferedImage) image;
-        width = bufferedImage.getWidth();
-        height = bufferedImage.getHeight();
-        byte[] byteTable = ((DataBufferByte)bufferedImage.getData().getDataBuffer()).getData();
-        pixels = new ArrayList<>(height);
-        for (int row = 0; row < height; row++) {
-            ArrayList<Pixel> rowList = new ArrayList<>(width);
-            pixels.add(rowList);
+public class PixelTable extends ArrayTable<Pixel> {
+
+    public PixelTable(BufferedImage image) {
+        super(Pixel.class, image.getWidth(), image.getHeight());
+        if (image.getType() == 	TYPE_3BYTE_BGR) setFrom_3BYTE_BGR(image);
+        System.out.println("Reading pixel data using the general method. It may take a while...");
+        mapIndexed((x, y) -> {
+            int color = image.getRGB(x, y);
+            int blue = color & 0xff;
+            int green = (color & 0xff00) >> 8;
+            int red = (color & 0xff0000) >> 16;
+            return new Pixel(red, green, blue);
+        });
+    }
+
+    private void setFrom_3BYTE_BGR(BufferedImage image) {
+        System.out.println("Reading pixel data from 3BYTE_BGR image");
+        byte[] bytes = ((DataBufferByte)image.getData().getDataBuffer()).getData();
+        for (int row = 0; row < height; row++)
             for (int col = 0; col < width; col++) {
                 int byteNumber = row * width + col;
-                byte red = byteTable[byteNumber * 3 + 2];
-                byte green = byteTable[byteNumber * 3 + 1];
-                byte blue = byteTable[byteNumber * 3];
-                rowList.add(new Pixel(red, green, blue));
+                byte red = bytes[byteNumber * 3 + 2];
+                byte green = bytes[byteNumber * 3 + 1];
+                byte blue = bytes[byteNumber * 3];
+                table[row][col] = new Pixel(red, green, blue);
             }
-        }
     }
 
-    public Pixel get(int x, int y) {
-        if(x < 0) x = width - 1;
-        if(x >= width) x = 0;
-        if(y < 0) y = height - 1;
-        if(y >= height) y = 0;
-        return pixels.get(x).get(y);
+    @Override
+    public Pixel get(int row, int col) {
+        if(row < 0) row = width - 1;
+        if(row >= width) row = 0;
+        if(col < 0) col = height - 1;
+        if(col >= height) col = 0;
+        return table[row][col];
     }
 
-    public ArrayList<ArrayList<Pixel>> getPixels() {
-        return pixels;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 }
