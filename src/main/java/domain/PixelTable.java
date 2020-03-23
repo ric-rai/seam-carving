@@ -29,7 +29,7 @@ public class PixelTable extends ArrayTable<Pixel> {
     }
 
     private void setTableFrom_3BYTE_BGR(BufferedImage image) {
-        System.out.println("Reading pixel data from 3BYTE_BGR image");
+        System.out.println("Reading pixel data from 3BYTE_BGR image.");
         byte[] bytes = ((DataBufferByte)image.getData().getDataBuffer()).getData();
         for (int row = 0; row < height; row++)
             for (int col = 0; col < width; col++) {
@@ -41,6 +41,12 @@ public class PixelTable extends ArrayTable<Pixel> {
             }
     }
 
+    /**
+     * Gets the element in position (row, col) = (x, y). If the given row or column index is greater than the maximum
+     * index it is interpreted to be the index 0 and if it is smaller than 0 it is interpreted to be the maximum index.
+     *
+     * @return Pixel
+     */
     @Override
     public Pixel get(int row, int col) {
         if(row < 0) row = width - 1;

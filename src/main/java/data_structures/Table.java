@@ -19,7 +19,7 @@ public interface Table<E> {
      *
      * @param row x-coordinate in table
      * @param col y-coordinate in table
-     * @return Element of type T
+     * @return Element of type E
      */
     E get(int row, int col);
 
@@ -41,7 +41,8 @@ public interface Table<E> {
     /**
      * Applies a mapping function to the table data to transform the table.
      *
-     * @param function A mapping function
+     * @param function A mapping function that takes two arguments; the first one is the row number and the second one
+     *                 the column number.
      */
     void mapIndexed(BiFunction<Integer, Integer, E> function);
 
