@@ -10,8 +10,8 @@ public class ArrayTable<E> implements Table<E> {
     protected int height;
 
     @SuppressWarnings("unchecked")
-    public ArrayTable(Class<E> type, int width, int height) {
-        table = (E[][]) Array.newInstance(type, width, height);
+    public ArrayTable(Class<E> eClass, int width, int height) {
+        table = (E[][]) Array.newInstance(eClass, width, height);
         this.width = width;
         this.height = height;
     }
@@ -40,6 +40,10 @@ public class ArrayTable<E> implements Table<E> {
                 table[row][col] = function.apply(row, col);
     }
 
+    public E[][] getTable() {
+        return table;
+    }
+
     @Override
     public int getWidth() {
         return width;
@@ -49,4 +53,5 @@ public class ArrayTable<E> implements Table<E> {
     public int getHeight() {
         return height;
     }
+
 }
