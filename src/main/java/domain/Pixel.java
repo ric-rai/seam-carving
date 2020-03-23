@@ -49,4 +49,11 @@ public class Pixel {
     public String toString() {
         return "Pixel{" + "red=" + red + ", green=" + green + ", blue=" + blue + '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Pixel)) return false;
+        Pixel o = (Pixel) obj;
+        return red == o.red && green == o.green && blue == o.blue;
+    }
 }

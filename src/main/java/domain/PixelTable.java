@@ -33,10 +33,10 @@ public class PixelTable extends ArrayTable<Pixel> {
         byte[] bytes = ((DataBufferByte)image.getData().getDataBuffer()).getData();
         for (int row = 0; row < height; row++)
             for (int col = 0; col < width; col++) {
-                int byteNumber = row * width + col;
-                byte red = bytes[byteNumber * 3 + 2];
-                byte green = bytes[byteNumber * 3 + 1];
-                byte blue = bytes[byteNumber * 3];
+                int i = row * width + col;
+                byte red = bytes[i * 3 + 2];
+                byte green = bytes[i * 3 + 1];
+                byte blue = bytes[i * 3];
                 table[row][col] = new Pixel(red, green, blue);
             }
     }

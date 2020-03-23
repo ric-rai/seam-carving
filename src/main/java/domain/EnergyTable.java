@@ -1,6 +1,7 @@
 package domain;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
@@ -9,7 +10,7 @@ public class EnergyTable {
     private ArrayList<ArrayList<Integer>> dualGradientEnergies;
 
     public EnergyTable(Image image) {
-        pixelTable = new PixelTable(image);
+        pixelTable = new PixelTable((BufferedImage) image);
     }
 
     private void computeDualGradientEnergyTable() {

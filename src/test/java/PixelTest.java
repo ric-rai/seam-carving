@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 public class PixelTest {
 
     @Test
-    public void getColor() {
+    public void getColorWorksCorrectly() {
         Pixel pixel = new Pixel();
         pixel.setRed(0);
         pixel.setGreen(127);
@@ -18,7 +18,7 @@ public class PixelTest {
     }
 
     @Test
-    public void constructionFromByteValues() {
+    public void constructionFromByteValuesWorksCorrectly() {
         byte red = 0, green = 127, blue = -1;
         Pixel pixel = new Pixel(red, green, blue);
         assertThat(pixel.getRed(), is(0));

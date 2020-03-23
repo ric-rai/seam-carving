@@ -2,42 +2,27 @@ import domain.Pixel;
 import domain.PixelTable;
 import org.junit.Test;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
-import static org.hamcrest.CoreMatchers.is;
+import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static utilities.TestUtils.getImageFromRgbArray;
 
 public class PixelTableTest {
 
     @Test
-    public void constructionFromImage() {
+    public void constructorWorksCorrectly() {
         int[][] rgbValues = {{255, 0, 0}, {0, 255, 0}, {0, 0, 255}, {127, 127, 127}};
         int width = 2, height = 2;
-        Image image = getImageFromArray(rgbValues, width, height);
+        BufferedImage image = getImageFromRgbArray(rgbValues, width, height, TYPE_INT_ARGB);
         PixelTable pixelTable = new PixelTable(image);
-        ArrayList<ArrayList<Pixel>> pixels = pixelTable.getPixels();
-        pixels.forEach(p -> p.forEach(System.out::println));
-        for (int row = 0; row < width; row++) {
-            for (int col = 0; col < height; col++) {
-                Pixel pixel = pixels.get(row).get(col);
-                int[] rgbValue = rgbValues[row * width + col];
-                assertThat(pixel.getRed(), is(rgbValue[0]));
-                assertThat(pixel.getGreen(), is(rgbValue[1]));
-                assertThat(pixel.getBlue(), is(rgbValue[2]));
-            }
-        }
-    }
-
-    public Image getImageFromArray(int[][] rgbValues, int width, int height) {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
-        for (int row = 0; row < height; row++) {
+        Pixel[][] pixels = new Pixel[2][2];
+        for (int row = 0; row < height; row++)
             for (int col = 0; col < width; col++) {
-                Color color = new Color(rgbValues[row][0], rgbValues[row][1], rgbValues[row][2]);
-                image.setRGB(col, row, color.getRGB());
+                int i = row * 2 + col;
+                pixels[row][col] = new Pixel(rgbValues[i][0], rgbValues[i][1], rgbValues[i][2]);
             }
-        }
-        return image;
+        assertThat(pixelTable.getTable(), equalTo(pixels));
     }
 }
