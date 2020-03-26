@@ -1,5 +1,7 @@
 package domain;
 
+import domain.enums.Color;
+
 public class Pixel {
     private int red, green, blue;
 
@@ -17,8 +19,8 @@ public class Pixel {
         this.blue = blue & 0xff;
     }
 
-    public int getColor(String color) {
-        return color.equals("R") ? red : color.equals("G") ? green : blue;
+    public int getColor(Color c) {
+        return c == Color.R ? red : c == Color.G ? green : blue;
     }
 
     public int getRed() {
