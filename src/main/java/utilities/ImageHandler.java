@@ -10,8 +10,8 @@ public final class ImageHandler {
 
     /**
      * A helper method that saves the given image to the file system.
-     * @param image object of class java.awt.Image - the image to be saved
-     * @param file object of class java.io.File - the path to the output file
+     * @param image The image to be saved
+     * @param file The path to the output file
      * @return Boolean indicating the success
      */
     public static Boolean saveImageToFile(Image image, File file) {
