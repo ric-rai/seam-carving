@@ -13,6 +13,12 @@ public class Pixel {
         this.blue = blue;
     }
 
+    public Pixel(int argbInt) {
+        this.red = (argbInt & 0xff0000) >> 16;
+        this.green = (argbInt & 0xff00) >> 8;
+        this.blue = argbInt & 0xff;
+    }
+
     public Pixel(byte red, byte green, byte blue) {
         this.red = red & 0xff;
         this.green = green & 0xff;
@@ -49,7 +55,7 @@ public class Pixel {
 
     @Override
     public String toString() {
-        return "Pixel{" + "red=" + red + ", green=" + green + ", blue=" + blue + '}';
+        return "Pixel{red=" + red + ", green=" + green + ", blue=" + blue + "}";
     }
 
     @Override

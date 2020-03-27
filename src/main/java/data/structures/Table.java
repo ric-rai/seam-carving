@@ -1,4 +1,4 @@
-package data_structures;
+package data.structures;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -15,19 +15,19 @@ import java.util.function.Function;
 public interface Table<E> {
 
     /**
-     * Gets the element in position (row, col) = (x, y)
+     * Gets the element in position (row, col) = (y, x)
      *
-     * @param row x-coordinate in table
-     * @param col y-coordinate in table
+     * @param row y-coordinate
+     * @param col x-coordinate
      * @return Element of type E
      */
     E get(int row, int col);
 
     /**
-     * Sets the element in position (row, col) = (x, y)
+     * Sets the element in position (row, col) = (y, x)
      *
-     * @param row x-coordinate in table
-     * @param col y-coordinate in table
+     * @param row y-coordinate
+     * @param col x-coordinate
      */
     void set(int row, int col, E e);
 

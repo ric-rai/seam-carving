@@ -18,7 +18,7 @@ public class CommandLineArguments {
     private File outputFile;
     private String validationErrorMessage = "";
 
-    public CommandLineArguments(String[] args){
+    public CommandLineArguments(String[] args) {
         this.args = args;
     }
 
@@ -27,13 +27,13 @@ public class CommandLineArguments {
      * @return Returns true if arguments are valid and false otherwise
      */
     public Boolean areValid() {
-        return LengthIsValid() &&
+        return lengthIsValid() &&
                 pathToImageIsValid() &&
                 outputWidthAndHeightAreValid() &&
                 outputFilePathIsValid();
     }
 
-    private boolean LengthIsValid() {
+    private boolean lengthIsValid() {
         if (args == null || args.length != 4) {
             validationErrorMessage = "Error: Wrong number of arguments given.";
             return false;

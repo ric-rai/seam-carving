@@ -1,4 +1,4 @@
-package data_structures;
+package data.structures;
 
 import java.lang.reflect.Array;
 import java.util.function.BiFunction;
@@ -8,10 +8,11 @@ public class ArrayTable<E> implements Table<E> {
     protected E[][] table;
     protected int width;
     protected int height;
+    protected BiFunction<Integer, Integer, Integer> getCollapsedIndex = (row, col) -> row * width + col;
 
     @SuppressWarnings("unchecked")
     public ArrayTable(Class<E> eClass, int width, int height) {
-        table = (E[][]) Array.newInstance(eClass, width, height);
+        table = (E[][]) Array.newInstance(eClass, height, width);
         this.width = width;
         this.height = height;
     }

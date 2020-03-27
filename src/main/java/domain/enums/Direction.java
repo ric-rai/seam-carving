@@ -1,3 +1,3 @@
 package domain.enums;
 
-public enum  Direction {X, Y}
+public enum Direction { X, Y }
