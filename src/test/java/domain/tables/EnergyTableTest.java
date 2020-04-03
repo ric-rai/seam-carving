@@ -1,5 +1,6 @@
-package domain;
+package domain.tables;
 
+import domain.tables.EnergyTable;
 import org.junit.Test;
 
 import java.awt.image.BufferedImage;
@@ -20,15 +21,15 @@ public class EnergyTableTest {
                 {255, 255, 51}, {255, 255, 153}, {255, 255, 255}
         };
         BufferedImage image = getImageFromRgbArray(rgbValues, 3, 4, TYPE_INT_ARGB);
-        EnergyTable energyTable = new EnergyTable(image);
-        Integer[][] energies = energyTable.getDualGradientEnergies();
+        EnergyTable testTable = new EnergyTable(image);
+        testTable.computeDualGradientEnergies();
         int[][] correctEnergies = {
                 {20808, 52020, 20808},
                 {20808, 52225, 21220},
                 {20809, 52024, 20809},
                 {20808, 52225, 21220}
         };
-        assertThat(energies, is(correctEnergies));
+        assertThat(testTable.getEnergyArray(), is(correctEnergies));
     }
 
 }

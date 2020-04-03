@@ -1,8 +1,8 @@
 package domain;
 
-import data.structures.ArrayTable;
+import data.structures.AbstractTable;
 
 public class Seam {
-    ArrayTable<Integer> pixelPositions;
+    AbstractTable<Integer> pixelPositions;
 
 }

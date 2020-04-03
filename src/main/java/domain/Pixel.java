@@ -1,61 +1,44 @@
 package domain;
 
-import domain.enums.Color;
-
 public class Pixel {
-    private int red, green, blue;
+    public int red, green, blue;
+    public int row, col;
+    public int energy, cumulativeEnergy;
+    public Pixel next, prev;
+    public Pixel[] adjacents = new Pixel[3];
 
     public Pixel() {}
 
-    public Pixel(int red, int green, int blue) {
+    public Pixel(int row, int col, int red, int green, int blue) {
+        setColors(red, green, blue);
+        setPosition(row, col);
+    }
+
+    public Pixel(int row, int col, int argbInt) {
+        setColors((argbInt & 0xff0000) >> 16, (argbInt & 0xff00) >> 8, argbInt & 0xff);
+        setPosition(row, col);
+    }
+
+    public Pixel(int row, int col, byte red, byte green, byte blue) {
+        setColors(red & 0xff, green & 0xff, blue & 0xff);
+        setPosition(row, col);
+    }
+
+    private void setColors(int red, int green, int blue) {
         this.red = red;
         this.green = green;
         this.blue = blue;
     }
 
-    public Pixel(int argbInt) {
-        this.red = (argbInt & 0xff0000) >> 16;
-        this.green = (argbInt & 0xff00) >> 8;
-        this.blue = argbInt & 0xff;
-    }
-
-    public Pixel(byte red, byte green, byte blue) {
-        this.red = red & 0xff;
-        this.green = green & 0xff;
-        this.blue = blue & 0xff;
-    }
-
-    public int getColor(Color c) {
-        return c == Color.R ? red : c == Color.G ? green : blue;
-    }
-
-    public int getRed() {
-        return red;
-    }
-
-    public int getGreen() {
-        return green;
-    }
-
-    public int getBlue() {
-        return blue;
-    }
-
-    public void setRed(int red) {
-        this.red = red;
-    }
-
-    public void setGreen(int green) {
-        this.green = green;
-    }
-
-    public void setBlue(int blue) {
-        this.blue = blue;
+    private void setPosition(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
     @Override
     public String toString() {
-        return "Pixel{red=" + red + ", green=" + green + ", blue=" + blue + "}";
+        return "Pixel{" + "r=" + red + ", g=" + green + ", b=" + blue +
+                ", row=" + row + ", col=" + col + '}';
     }
 
     @Override
@@ -63,5 +46,10 @@ public class Pixel {
         if (!(obj instanceof Pixel)) return false;
         Pixel o = (Pixel) obj;
         return red == o.red && green == o.green && blue == o.blue;
+    }
+
+    @SuppressWarnings("unused")
+    public Pixel[] getAdjacents() {
+        return adjacents;
     }
 }

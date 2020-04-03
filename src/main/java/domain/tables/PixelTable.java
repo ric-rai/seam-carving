@@ -1,13 +1,14 @@
-package domain;
+package domain.tables;
 
-import data.structures.ArrayTable;
+import data.structures.AbstractTable;
+import domain.Pixel;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
 import static java.awt.image.BufferedImage.TYPE_3BYTE_BGR;
 
-public class PixelTable extends ArrayTable<Pixel> {
+public class PixelTable extends AbstractTable<Pixel> {
 
     public PixelTable(BufferedImage image) {
         super(Pixel.class, image.getWidth(), image.getHeight());
@@ -17,13 +18,19 @@ public class PixelTable extends ArrayTable<Pixel> {
 
     private void setTableByUsingGeneralMethod(BufferedImage image) {
         System.out.println("Reading pixel data using the general method. It may take a while...");
-        mapIndexed((row, col) -> new Pixel(image.getRGB(col, row)));
+        for (int row = 0; row < height; row++)
+            for (int col = 0; col < width; col++)
+                set(row, col, new Pixel(row, col, image.getRGB(col, row)));
     }
 
     private void setTableFrom3ByteBgr(BufferedImage image) {
         System.out.println("Reading pixel data from 3BYTE_BGR image.");
         byte[] bytes = ((DataBufferByte) image.getData().getDataBuffer()).getData();
-        mapIndexed(getCollapsedIndex.andThen(i -> new Pixel(bytes[i * 3 + 2], bytes[i * 3 + 1], bytes[i * 3])));
+        for (int row = 0; row < height; row++)
+            for (int col = 0; col < width; col++) {
+                int i = getCollapsedIndex(row, col);
+                set(row, col, new Pixel(row, col, bytes[i * 3 + 2], bytes[i * 3 + 1], bytes[i * 3]));
+            }
     }
 
     /**
@@ -39,6 +46,10 @@ public class PixelTable extends ArrayTable<Pixel> {
         if (col < 0) col = width - 1;
         if (col >= width) col = 0;
         return table[row][col];
+    }
+    
+    public Pixel[][] getPixelArray() {
+        return table;
     }
 
 }
