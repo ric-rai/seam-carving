@@ -16,9 +16,14 @@ public final class ImageHandler {
      */
     public static Boolean saveImageToFile(Image image, File file) {
         try {
-            ImageIO.write((RenderedImage) image, "jpg", file);
+            int index = file.getName().lastIndexOf(".");
+            String name = file.getName().substring(0, index);
+            String path = file.getParent() == null ?
+                    name + ".png" : file.getParent() + "/" + name + ".png";
+            ImageIO.write((RenderedImage) image, "png", new File(path));
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
     }

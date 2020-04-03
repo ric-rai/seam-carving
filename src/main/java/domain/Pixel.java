@@ -4,8 +4,7 @@ public class Pixel {
     public int red, green, blue;
     public int row, col;
     public int energy, cumulativeEnergy;
-    public Pixel next, prev;
-    public Pixel[] adjacents = new Pixel[3];
+    public Pixel prev;
 
     public Pixel() {}
 
@@ -48,8 +47,4 @@ public class Pixel {
         return red == o.red && green == o.green && blue == o.blue;
     }
 
-    @SuppressWarnings("unused")
-    public Pixel[] getAdjacents() {
-        return adjacents;
-    }
 }

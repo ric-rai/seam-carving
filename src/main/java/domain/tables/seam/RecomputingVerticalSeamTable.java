@@ -5,14 +5,14 @@ import domain.Pixel;
 import java.awt.image.BufferedImage;
 
 
-public class VerticalSeamTable extends AbstractSeamTable {
+public class RecomputingVerticalSeamTable extends AbstractSeamTable {
 
-    public VerticalSeamTable(BufferedImage image) {
+    public RecomputingVerticalSeamTable(BufferedImage image) {
         super(image);
     }
 
     @Override
-    protected void computeSeams() {
+    public void computeSeams() {
         lastPixels = new Pixel[width];
         computeFirstRow();
         computeRowsFromSecondToSecondLast();
@@ -21,11 +21,42 @@ public class VerticalSeamTable extends AbstractSeamTable {
     }
 
     @Override
-    protected void removeSeam(Pixel pixel) {
+    public void removeSeams(int numberOfSeams) {
+        for (int i = 0; i < numberOfSeams; i++) {
+            computeSeams();
+            removeSeam();
+            computeDualGradientEnergies();
+        }
     }
 
     @Override
-    protected void addSeam() {
+    public void addSeams(int numberOfSeams) {
+    }
+
+    void removeSeam() {
+        Pixel pixel = lastPixels[0];
+        for (int i = 0; i < height; i++) {
+            //System.out.println("row: " + pixel.row + " - col: " + pixel.col);
+            table[pixel.row][pixel.col] = null;
+            pixel = pixel.prev;
+        }
+        resetTable();
+    }
+
+    void resetTable() {
+        Pixel[][] newTable = new Pixel[height][width - 1];
+        for (int row = 0; row < height; row++) {
+            int offset = 0;
+            for (int col = 0; col < width - 1; col++) {
+                if (offset == 0 && table[row][col] == null) offset = 1;
+                Pixel pixel = table[row][col + offset];
+                newTable[row][col] = pixel;
+                pixel.row = row;
+                pixel.col = col;
+            }
+        }
+        table = newTable;
+        width -= 1;
     }
 
     private void computeFirstRow() {
@@ -46,7 +77,7 @@ public class VerticalSeamTable extends AbstractSeamTable {
     }
 
     protected void connect(Pixel predecessor, Pixel pixel) {
-        super.connect(predecessor, pixel, pixel.col - predecessor.col + 1);
+        super.connect(predecessor, pixel);
     }
 
     private Pixel chooseLowestPredecessor(int row, int col) {

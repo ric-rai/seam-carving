@@ -11,6 +11,8 @@ public class Application {
         args = new CommandLineArguments(arguments);
         if (!args.areValid())
             exit(args.getValidationErrorMessage());
+        System.out.println("Image height: " + args.getImage().getHeight());
+        System.out.println("Image width: " + args.getImage().getWidth());
         ImageScaler scaler = new ContentAwareImageScaler(args.getImage(), args.getOutputWidth(), args.getOutputHeight());
         Image outputImage = scaler.scale();
         if (!ImageHandler.saveImageToFile(outputImage, args.getOutputFile())) {

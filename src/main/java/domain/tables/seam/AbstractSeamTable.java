@@ -14,38 +14,19 @@ public abstract class AbstractSeamTable extends EnergyTable {
         super(image);
     }
 
-    abstract void computeSeams();
+    public abstract void computeSeams();
 
-    abstract void removeSeam(Pixel pixel);
+    abstract public void removeSeams(int numberOfSeams);
 
-    void removeSeam() {
-        removeSeam(lastPixels[0]);
-        lastPixels[0] = null;
-        sortLastPixelsByCumulativeEnergy();
-    }
-
-    abstract void addSeam();
-
-    public void removeSeams(int numberOfSeams) {
-        computeSeams();
-        for (int i = 0; i < numberOfSeams; i++) removeSeam();
-    }
-
-    public void addSeams(int numberOfSeams) {
-        computeSeams();
-        for (int i = 0; i < numberOfSeams; i++) addSeam();
-    }
+    abstract public void addSeams(int numberOfSeams);
 
     Pixel addToLastPixels(Pixel pixel, int i) {
         return lastPixels[i] = pixel;
     }
 
-    void connect(Pixel predecessor, Pixel pixel, int adjacentIndex) {
-        predecessor.adjacents[adjacentIndex] = pixel;
+    void connect(Pixel predecessor, Pixel pixel) {
         pixel.cumulativeEnergy = pixel.energy + predecessor.cumulativeEnergy;
         pixel.prev = predecessor;
-        if(predecessor.next == null || predecessor.next.cumulativeEnergy > pixel.cumulativeEnergy)
-            predecessor.next = pixel;
     }
 
     void sortLastPixelsByCumulativeEnergy() {

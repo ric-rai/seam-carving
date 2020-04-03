@@ -1,12 +1,12 @@
 package domain.tables;
 
 import domain.Pixel;
+import domain.tables.PixelTable;
 import org.junit.Test;
 
 import static java.awt.image.BufferedImage.TYPE_3BYTE_BGR;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static utilities.TestUtils.getImageFromRgbArray;
 
@@ -38,10 +38,10 @@ public class PixelTableTest {
         for (int row = 0; row < height; row++)
             for (int col = 0; col < width; col++)
                 assertThat(pixelTable.get(row, col), is(pixels[row][col]));
-        assertThat(pixelTable.get(-1, 0), is(nullValue()));
-        assertThat(pixelTable.get(height, 0), is(nullValue()));
-        assertThat(pixelTable.get(0, -1), is(nullValue()));
-        assertThat(pixelTable.get(0, width), is(nullValue()));
+        assertThat(pixelTable.get(-1, 0), is(pixels[height - 1][0]));
+        assertThat(pixelTable.get(height, 0), is(pixels[0][0]));
+        assertThat(pixelTable.get(0, -1), is(pixels[0][width - 1]));
+        assertThat(pixelTable.get(0, width), is(pixels[0][0]));
     }
 
 }

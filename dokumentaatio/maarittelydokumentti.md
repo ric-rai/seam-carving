@@ -21,17 +21,13 @@ Tämäkin vaihe voidaan toteuttaa usealla eri algoritmilla. Jos mahdollista, nii
 ### 3. Pikselijonojen poistaminen tai lisääminen
 Kuvaa pienennettäessä jonoja poistetaan ja suurennettaessa kahdennetaan merkitsevyysjärjestyksessä.
 
-_...Tähän tulossa vielä tarkennusta..._
-
 ## Tarvittavat tietorakenteet
 Kovin monimutkaisia tietorakenteita ei tarvita, sillä kuvat ovat pohjimmiltaan kaksiulotteisia taulukoita. Listarakenteiden lisäksi voidaan tarvita esim. miminikekoa. Jonkinlainen taulu-rakenne matriiseille voisi olla kätevä.
 
 ## Aika- ja tilavaativuus
 Tilavaativuus on yksinkertaisesti kuvan koko, eli O(w*h). Aikavaativuudessa on eri toteutusten välillä vaihtelua lähinnä kertoimissa. Toisaalta aikavaativuus riippuu myös siitä, miten kuvaa haluataan skaalata, eli tehdäänkö skaalaus esimerkiksi sekä pituus että leveyssuunnassa, jolloin myös aikavaativuus on lähtökohtaisesti O(w*h).
 
-[Tässä dokumentissa](http://pacman.cs.tsinghua.edu.cn/~cwg/papers_cwg/icpads14.pdf) (2014) on kuvattu melko edistyneen oloisia optimointeja. Yritän ehtiä tutustumaan niihin paremmin.
-
-_...Tähän tulossa vielä tarkennusta..._
+[Tässä dokumentissa](http://pacman.cs.tsinghua.edu.cn/~cwg/papers_cwg/icpads14.pdf) (2014) on kuvattu melko edistyneitä optimointeja, joissa hyödynnetään rinnakkaisohjelmointia.
 
 ## Syötteet ja tulosteet
 Ohjelma/algoritmi käyttää yksinkertaista komentoliittymää, jolla syötteet annetaan.
@@ -42,7 +38,7 @@ Ohjelma/algoritmi käyttää yksinkertaista komentoliittymää, jolla syötteet 
 * skaalatun kuvan tiedostopolku
 
 ##### Mahdollisesti
-* asetuksia: mitä algoritmia halutaan käyttää yms..
+* asetuksia: mitä energiafunktiota halutaan käyttää yms..
 
 ### Tulosteet:  
 * skaalattu kuva
@@ -51,9 +47,11 @@ Ohjelma/algoritmi käyttää yksinkertaista komentoliittymää, jolla syötteet 
 * energiataulu
 * saumojen (pikselijonojen) havainnointikuva
 
-## Luokkakaavio
+## Luokkakaavio ja ohjelman rakenne
 
-_...Tulossa pian..._
+Ideana on rakentaa algoritmi vaiheittain käyttäen Table-luokkien välillä perintää.
+
+![Diagram](./kuvat/class-diagram.png)
  
 
 ## Lähteet

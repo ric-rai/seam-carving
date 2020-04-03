@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ public class CommandLineArguments {
     private final String usage =
             "Usage: SeamCarving [path to image file] [output width] [output height] [path to output file]";
     private String[] args;
-    private Image image;
+    private BufferedImage image;
     private Integer outputWidth;
     private Integer outputHeight;
     private File outputFile;
@@ -62,23 +63,16 @@ public class CommandLineArguments {
     }
 
     private boolean outputFilePathIsValid() {
-        File file = new File(args[3]);
-        if (!file.isDirectory())
-            file = file.getParentFile();
-        if (file.exists()) {
-            outputFile = file;
-            return true;
-        } else {
-            validationErrorMessage = "Error: Invalid output file path.";
-            return false;
-        }
+        outputFile = new File(args[3]);
+        return true;
+        //validationErrorMessage = "Error: Invalid output file path.";
     }
 
     public String getUsage() {
         return usage;
     }
 
-    public Image getImage() {
+    public BufferedImage getImage() {
         return image;
     }
 
