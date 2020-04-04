@@ -6,7 +6,7 @@ Ohjelman alkuperäisen määrittelydokumentissa kuvatun rakenteen tarkoitus on o
 
 Merkintöjen yksinkertaistamiseksi aikavaativuutta käsitellään olettamalla, että kuvan leveys ja korkeus ovat samat, ja että kuvaa skaalataan saman verran sekä leveys- että korkeussuunnassa. Korkeudelle ja leveydelle käytetään merkintää _n_, ja skaalausarvolle, eli sille määrälle pikseleitä, joka tulee lisätä tai poistaa, merkintää _k_. 
 
-Algoritmin yläraja eri toteutuksilla on aina luokkaa O(n^2), jos ei käytetä rinnakkaisohjelmointia.
+Algoritmin aikavaativuus eri toteutuksilla on aina luokkaa O(n^2), jos ei käytetä rinnakkaisohjelmointia.
 
 ## Pääluokat
 
@@ -38,7 +38,7 @@ joissa esimerkiksi
 
 <img src="https://latex.codecogs.com/svg.latex?R_x(x,y)=|\,\text{red}(x&plus;1,y)-\text{red}(x-1,y)\,|" title="R_x(x,y)=|\,\text{red}(x+1,y)-\text{red}(x-1,y)\,|" /></br>
 
-kun red(x, y) palauttaa pikselin punaisen värikomponentin arvon kohdassa (x, y).
+kun red(x, y) palauttaa kohdassa (x, y) olevan pikselin punaisen värikomponentin arvon.
 
 
 
@@ -46,7 +46,7 @@ kun red(x, y) palauttaa pikselin punaisen värikomponentin arvon kohdassa (x, y)
 
 SeamTable -luokat laskevat vähiten merkitseviä pikelijonoja, eli lyhimpiä energiapolkuja, jotka kulkevat kuvan laidasta laitaan.
 
-Saumojen etsintä on toteutettu dynaamisella ohjelmoinnilla. Esimerkiksi pystysuuntaisessa taulussa etsitään alimman rivin pikseleistä se, johon on lyhin polku jostain ylimmän rivin pikselistä energia-arvojen toimiessa pikseleiden painoina. Lyhimmän reitin painoa kutsutaan pikselin kumulatiiviseksi energiaksi, ja se voidaan määritellä rekursiivisena funktiona _c_
+Saumojen etsintä on toteutettu dynaamisella ohjelmoinnilla. Esimerkiksi pystysuuntaisessa taulussa etsitään alimman rivin pikseleistä se, johon on lyhin polku jostain ylimmän rivin pikselistä energia-arvojen toimiessa pikseleiden painoina. Lyhimmän polun painoa kutsutaan pikselin kumulatiiviseksi energiaksi, ja se voidaan määritellä rekursiivisena funktiona _c_
 
 <img src="https://latex.codecogs.com/svg.latex?c(x,&space;y)&space;=&space;e(x,&space;y)&space;&plus;&space;\text{min}(&space;c(x-1,&space;y-1),&space;c(x,&space;y-1),&space;c(x&plus;1,&space;y-1))" title="c(x, y) = e(x, y) + \text{min}( c(x-1, y-1), c(x, y-1), c(x+1, y-1))" /></br>  
 
@@ -62,7 +62,7 @@ Algoritmin suorittamien askelten määrä on aina sama kuvan sisällöstä riipp
 
 <img src="https://latex.codecogs.com/svg.latex?\sum&space;_{i=0}^{k-1}&space;n&space;(n-i)&plus;\sum&space;_{i=0}^{k-1}&space;(n-i)&space;(n-k)" title="\sum _{i=0}^{k-1} n (n-i)+\sum _{i=0}^{k-1} (n-i) (n-k)" /></br>
 
-Helpoin tapaus on yhden sauman poisto, eli k = 1, jonka aikavaativuudeksi saadaan:
+Helpoin tapaus on yhden sauman poisto, eli k = 1, jonka aikavaativuus on
 
 <img src="https://latex.codecogs.com/svg.latex?\Theta(2&space;n^2-n)" title="\Theta(2 n^2-n)" /></br>
 
