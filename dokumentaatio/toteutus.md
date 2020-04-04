@@ -6,7 +6,7 @@ Ohjelman alkuperäisen määrittelydokumentissa kuvatun rakenteen tarkoitus on o
 
 Merkintöjen yksinkertaistamiseksi aikavaativuutta käsitellään olettamalla, että kuvan leveys ja korkeus ovat samat, ja että kuvaa skaalataan saman verran sekä leveys- että korkeussuunnassa. Korkeudelle ja leveydelle käytetään merkintää _n_, ja skaalausarvolle, eli sille määrälle pikseleitä, joka tulee lisätä tai poistaa, merkintää _k_. 
 
-Algoritmin yläraja eri toteutuksilla on aina O(n^2), jos ei käytetä rinnakkaisohjelmointia. Keskitynkin ensisijassa tutkimaan eri toteutusten aikavaativuuden alarajoja.
+Algoritmin yläraja eri toteutuksilla on aina luokkaa O(n^2), jos ei käytetä rinnakkaisohjelmointia.
 
 ## Pääluokat
 
@@ -52,19 +52,19 @@ Saumojen etsintä on toteutettu dynaamisella ohjelmoinnilla. Esimerkiksi pystysu
 
 ## Eri toteutukset
 
-##### _eli SeamTable -alaluokat_
+#### _eli SeamTable -alaluokat_
 
 ### Recomputing -toteutus
 
 RecomputingVertical- ja RecomputingHorizontalSeamTable -luokat toteuttavat algoritmin siten, että kaikkien pikseleiden energia-arvot lasketaan uudelleen jokaisen saumanpoiston tai -lisäyksen yhteydessä. Luokat käyttävät edellä kuvattua dynaamista ohjelmointia saumojen etsimiseen.
 
-Algoritmin suorittamien askelten määrä on aina sama:
+Algoritmin suorittamien askelten määrä on aina sama kuvan sisällöstä riippumatta:
 
 <img src="https://latex.codecogs.com/svg.latex?\sum&space;_{i=0}^{k-1}&space;n&space;(n-i)&plus;\sum&space;_{i=0}^{k-1}&space;(n-i)&space;(n-k)" title="\sum _{i=0}^{k-1} n (n-i)+\sum _{i=0}^{k-1} (n-i) (n-k)" /></br>
 
-Helpoin tapaus on yhden sauman poisto, eli k = 1, joten toteutuksen alarajaksi saadaan:
+Helpoin tapaus on yhden sauman poisto, eli k = 1, jonka aikavaativuudeksi saadaan:
 
-<img src="https://latex.codecogs.com/svg.latex?\Omega(2&space;n^2-n)" title="\Omega(2 n^2-n)" /></br>
+<img src="https://latex.codecogs.com/svg.latex?\Theta(2&space;n^2-n)" title="\Theta(2 n^2-n)" /></br>
 
 Kyseessä on suoraviivainen, mutta laskennallisesti kallis tapa toteuttaa algoritmi. Käytännössä tarkkaresoluutioisen kuvan skaalaaminen tällä tavalla kestää jopa kymmeniä sekunteja. Esimerkiksi ns. täysteräväpiirtokuvassa on pikseleitä 1920 x 1080 = 2 073 600. Tällä toteutuksella askelia tulee 2 239 746 840, kun kuva skaalataan puolet pienemmäksi.
 
