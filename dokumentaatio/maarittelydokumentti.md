@@ -1,6 +1,6 @@
 # Määrittelydokumentti
 
-Ajatuksena on ensisijassa luoda ohjelma, joka hyödyntää niin kutsuttua seam carving -algoritmia kuvan sisältötietoiseen skaalaamiseen. Tämä siis käsittää sekä kuvan leveyden tai pituuden pienentämisen tai suurentamisen.
+Ajatuksena on ensisijassa luoda ohjelma, joka hyödyntää niin kutsuttua seam carving -algoritmia kuvan sisältötietoiseen skaalaamiseen. Tämä siis käsittää sekä kuvan leveyden tai korkeuden pienentämisen tai suurentamisen.
 
 ## Algoritmin rakenne
 
@@ -22,10 +22,10 @@ Tämäkin vaihe voidaan toteuttaa usealla eri algoritmilla. Jos mahdollista, nii
 Kuvaa pienennettäessä jonoja poistetaan ja suurennettaessa kahdennetaan merkitsevyysjärjestyksessä.
 
 ## Tarvittavat tietorakenteet
-Kovin monimutkaisia tietorakenteita ei tarvita, sillä kuvat ovat pohjimmiltaan kaksiulotteisia taulukoita. Listarakenteiden lisäksi voidaan tarvita esim. miminikekoa. Jonkinlainen taulu-rakenne matriiseille voisi olla kätevä.
+Kovin monimutkaisia tietorakenteita ei tarvita, sillä kuvat ovat pohjimmiltaan kaksiulotteisia taulukoita. Listarakenteiden lisäksi voidaan tarvita esim. miminikekoa. Jonkinlainen taulu-rakenne voisi olla kätevä.
 
 ## Aika- ja tilavaativuus
-Tilavaativuus on yksinkertaisesti kuvan koko, eli O(w*h). Aikavaativuudessa on eri toteutusten välillä vaihtelua lähinnä kertoimissa. Toisaalta aikavaativuus riippuu myös siitä, miten kuvaa haluataan skaalata, eli tehdäänkö skaalaus esimerkiksi sekä pituus että leveyssuunnassa, jolloin myös aikavaativuus on lähtökohtaisesti O(w*h).
+Tilavaativuus on yksinkertaisesti kuvan koko, eli O(wh), missä w on kuvan leveys ja h sen korkeus. Aikavaativuudessa on eri toteutusten välillä vaihtelua lähinnä kertoimissa. Toisaalta aikavaativuus riippuu myös siitä, miten kuvaa haluataan skaalata, eli tehdäänkö skaalaus esimerkiksi sekä pituus että leveyssuunnassa, jolloin myös aikavaativuus on lähtökohtaisesti O(wh).
 
 [Tässä dokumentissa](http://pacman.cs.tsinghua.edu.cn/~cwg/papers_cwg/icpads14.pdf) (2014) on kuvattu melko edistyneitä optimointeja, joissa hyödynnetään rinnakkaisohjelmointia.
 
