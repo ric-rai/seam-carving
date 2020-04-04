@@ -4,7 +4,7 @@ Ohjelman alkuperäisen määrittelydokumentissa kuvatun rakenteen tarkoitus on o
 
 #### Merkinnöistä
 
-Merkintöjen yksinkertaistamiseksi aikavaativuutta käsitellään olettamalla, että kuvan leveys ja korkeus ovat samat, ja että kuvaa skaalataan saman verran sekä leveys- että korkeussuunnassa. Korkeudelle ja leveydelle käytetään merkintää _n_, ja skaalausarvolle, eli sille määrälle pikseleitä, joka tulee lisätä tai poistaa, merkintää _k_. 
+Merkintöjen yksinkertaistamiseksi aikavaativuutta käsitellään olettamalla, että kuvan leveys ja korkeus ovat samat, ja että kuvaa skaalataan saman verran sekä leveys- että korkeussuunnassa. Korkeudelle ja leveydelle käytetään merkintää _n_, ja skaalausarvolle, eli sille määrälle pikseleitä, joka tulee lisätä tai poistaa, merkintää _k_.
 
 Algoritmin aikavaativuus eri toteutuksilla on aina luokkaa O(n^2), jos ei käytetä rinnakkaisohjelmointia.
 
@@ -62,7 +62,7 @@ Algoritmin suorittamien askelten määrä on aina sama kuvan sisällöstä riipp
 
 <img src="https://latex.codecogs.com/svg.latex?\sum&space;_{i=0}^{k-1}&space;n&space;(n-i)&plus;\sum&space;_{i=0}^{k-1}&space;(n-i)&space;(n-k)" title="\sum _{i=0}^{k-1} n (n-i)+\sum _{i=0}^{k-1} (n-i) (n-k)" /></br>
 
-Helpoin tapaus on yhden sauman poisto, eli k = 1, jonka aikavaativuus on
+Yksinkertainen tapaus on kuvan skaalaminen yhden pikselin pienemmäksi, eli k = 1, jonka aikavaativuus on
 
 <img src="https://latex.codecogs.com/svg.latex?\Theta(2&space;n^2-n)" title="\Theta(2 n^2-n)" /></br>
 
