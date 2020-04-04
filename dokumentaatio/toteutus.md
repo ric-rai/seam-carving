@@ -30,17 +30,15 @@ Luokka tarjoaa metodit energia-arvojen laskemiseen. Energia-arvojen laskeminen o
 
 missä x- ja y-gradienttien neliöt ovat
 
-<img src="https://latex.codecogs.com/svg.latex?\Delta&space;_x^2=R_x(x,y)^2&plus;G_x(x,y)^2&plus;B_x(x,y)^2" title="\Delta _x^2=R_x(x,y)^2+G_x(x,y)^2+B_x(x,y)^2" /></br>
+<img src="https://latex.codecogs.com/svg.latex?\Delta&space;_x^2(x,y)=R_x(x,y)^2&plus;G_x(x,y)^2&plus;B_x(x,y)^2" title="\Delta _x^2(x,y)=R_x(x,y)^2+G_x(x,y)^2+B_x(x,y)^2" /></br>
 
-<img src="https://latex.codecogs.com/svg.latex?\Delta&space;_y^2=R_y(x,y)^2&plus;G_y(x,y)^2&plus;B_y(x,y)^2" title="\Delta _y^2=R_y(x,y)^2+G_y(x,y)^2+B_y(x,y)^2" /></br>
+<img src="https://latex.codecogs.com/svg.latex?\Delta&space;_y^2(x,y)=R_y(x,y)^2&plus;G_y(x,y)^2&plus;B_y(x,y)^2" title="\Delta _y^2(x,y)=R_y(x,y)^2+G_y(x,y)^2+B_y(x,y)^2" /></br>
 
 joissa esimerkiksi
 
 <img src="https://latex.codecogs.com/svg.latex?R_x(x,y)=|\,\text{red}(x&plus;1,y)-\text{red}(x-1,y)\,|" title="R_x(x,y)=|\,\text{red}(x+1,y)-\text{red}(x-1,y)\,|" /></br>
 
 kun red(x, y) palauttaa kohdassa (x, y) olevan pikselin punaisen värikomponentin arvon.
-
-
 
 ### SeamTable
 
@@ -54,7 +52,7 @@ Saumojen etsintä on toteutettu dynaamisella ohjelmoinnilla. Esimerkiksi pystysu
 
 #### _eli SeamTable -alaluokat_
 
-### Recomputing -toteutus
+### Uudelleenlaskennalla
 
 RecomputingVertical- ja RecomputingHorizontalSeamTable -luokat toteuttavat algoritmin siten, että kaikkien pikseleiden energia-arvot lasketaan uudelleen jokaisen saumanpoiston tai -lisäyksen yhteydessä. Luokat käyttävät edellä kuvattua dynaamista ohjelmointia saumojen etsimiseen.
 
