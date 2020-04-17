@@ -1,7 +1,6 @@
 package domain.tables;
 
 import domain.Pixel;
-import domain.tables.PixelTable;
 import org.junit.Test;
 
 import static java.awt.image.BufferedImage.TYPE_3BYTE_BGR;

@@ -44,7 +44,7 @@ kun red(x, y) palauttaa kohdassa (x, y) olevan pikselin punaisen värikomponenti
 
 SeamTable -luokat laskevat vähiten merkitseviä pikelijonoja, eli lyhimpiä energiapolkuja, jotka kulkevat kuvan laidasta laitaan.
 
-Saumojen etsintä on toteutettu dynaamisella ohjelmoinnilla. Esimerkiksi pystysuuntaisessa taulussa etsitään alimman rivin pikseleistä se, johon on lyhin polku jostain ylimmän rivin pikselistä energia-arvojen toimiessa pikseleiden painoina. Lyhimmän polun painoa kutsutaan pikselin kumulatiiviseksi energiaksi, ja se voidaan määritellä rekursiivisena funktiona _C_
+Saumojen etsintä on toteutettu dynaamisella ohjelmoinnilla. Esimerkiksi **pystysuuntaisessa** taulussa etsitään alimman rivin pikseleistä se, johon on lyhin polku jostain ylimmän rivin pikselistä energia-arvojen toimiessa pikseleiden painoina. Lyhimmän polun painoa kutsutaan pikselin kumulatiiviseksi energiaksi, ja se voidaan määritellä rekursiivisena funktiona _C_
 
 <img src="https://latex.codecogs.com/svg.latex?C(x,&space;y)&space;=&space;E(x,&space;y)&space;&plus;&space;\text{min}(&space;C(x-1,&space;y-1),&space;C(x,&space;y-1),&space;C(x&plus;1,&space;y-1))" title="C(x, y) = E(x, y) + \text{min}( C(x-1, y-1), C(x, y-1), C(x+1, y-1))" /></br>  
 

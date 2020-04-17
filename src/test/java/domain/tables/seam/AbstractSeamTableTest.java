@@ -11,7 +11,8 @@ public class AbstractSeamTableTest {
 
     void setSeamPixels(Pixel[] seamPixels, int seamIndex) {
         seamPixels[0] = seamTable.lastPixels[seamIndex];
-        for (int i = 1; i < seamPixels.length; i++) seamPixels[i] = seamPixels[i - 1].prev;
+        for (int i = 1; i < seamPixels.length; i++)
+            seamPixels[i] = seamPixels[i - 1].prev;
     }
 
     Integer[][] getPixelPositions(Pixel[] pixels) {

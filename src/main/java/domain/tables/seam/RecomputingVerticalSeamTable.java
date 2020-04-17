@@ -13,19 +13,16 @@ public class RecomputingVerticalSeamTable extends AbstractSeamTable {
 
     @Override
     public void computeSeams() {
-        lastPixels = new Pixel[width];
         computeFirstRow();
         computeRowsFromSecondToSecondLast();
         computeLastRow();
-        sortLastPixelsByCumulativeEnergy();
     }
 
     @Override
     public void removeSeams(int numberOfSeams) {
+        computeSeams();
         for (int i = 0; i < numberOfSeams; i++) {
-            computeSeams();
             removeSeam();
-            computeDualGradientEnergies();
         }
     }
 
@@ -60,38 +57,85 @@ public class RecomputingVerticalSeamTable extends AbstractSeamTable {
     }
 
     private void computeFirstRow() {
-        for (int col = 0; col < width; col++)
-            table[0][col].cumulativeEnergy = table[0][col].energy;
+        rgbValues.set(0, 0);
+        computeDualGradientEnergyForLeftTopCorner();
+        cumulativeEnergies[0][0] = energies[0][0];
+        for (int col = 1; col < width - 1; col++) {
+            rgbValues.set(0, col);
+            computeDualGradientEnergyForTopRow(col);
+            cumulativeEnergies[0][col] = energies[0][col];
+        }
+        rgbValues.set(0, width - 1);
+        computeDualGradientEnergyForRightTopCorner();
+        cumulativeEnergies[0][width - 1] = energies[0][width - 1];
     }
 
     private void computeRowsFromSecondToSecondLast() {
-        for (int row = 1; row < height - 1; row++)
-            for (int col = 0; col < width; col++)
-                connect(chooseLowestPredecessor(row, col), table[row][col]);
+        for (int row = 1; row < height - 1; row++) {
+            //Leftmost pixels
+            rgbValues.set(row, 0);
+            computeDualGradientEnergyForLeftmostCol(row);
+            connect(row, 0, chooseLowestPredecessorAtLeftmostCol(row));
+            //Middle pixels
+            for (int col = 1; col < width - 1; col++) {
+                rgbValues.set(row, col);
+                computeDualGradientEnergy(row, col);
+                connect(row, col, chooseLowestPredecessor(row, col));
+            }
+            //Rightmost pixels
+            rgbValues.set(row, width - 1);
+            computeDualGradientEnergyForRightmostCol(row);
+            connect(row, width - 1, chooseLowestPredecessorAtRightmostCol(row));
+        }
     }
 
     private void computeLastRow() {
-        for (int col = 0; col < width; col++)
-            connect(chooseLowestPredecessor(height - 1, col),
-                    addToLastPixels(table[height - 1][col], col));
+        int row = height - 1;
+        //Left corner pixel
+        rgbValues.set(row, 0);
+        computeDualGradientEnergyForLeftBottomCorner();
+        connect(row, 0, chooseLowestPredecessorAtLeftmostCol(row));
+        checkIfCumulativeEnergyIsLowest(cumulativeEnergies[row][0], 0);
+        //Middle pixels
+        for (int col = 1; col < width - 1; col++) {
+            rgbValues.set(row, col);
+            computeDualGradientEnergyForBottomRow(col);
+            connect(row, col, chooseLowestPredecessor(row, col));
+            checkIfCumulativeEnergyIsLowest(cumulativeEnergies[row][col], col);
+        }
+        //Right corner pixel
+        rgbValues.set(row, width - 1);
+        computeDualGradientEnergyForRightBottomCorner();
+        connect(row, width - 1, chooseLowestPredecessorAtRightmostCol(row));
+        checkIfCumulativeEnergyIsLowest(cumulativeEnergies[row][width - 1], width - 1);
     }
 
-    protected void connect(Pixel predecessor, Pixel pixel) {
-        super.connect(predecessor, pixel);
+    void connect(int row, int col, int offset) {
+        lowestPredecessorOffsets[row][col] = offset;
+        cumulativeEnergies[row][col] = energies[row][col] + energies[row + offset][col];
     }
 
-    private Pixel chooseLowestPredecessor(int row, int col) {
+    private int chooseLowestPredecessorAtLeftmostCol(int row) {
         row = row - 1;
         int offset = 0;
-        if (col == 0) {
-            if (table[row][col + 1].cumulativeEnergy < table[row][col].cumulativeEnergy) offset = 1;
-        } else if (col == width - 1) {
-            if (table[row][col - 1].cumulativeEnergy < table[row][col].cumulativeEnergy) offset = -1;
-        } else {
-            if (table[row][col - 1].cumulativeEnergy < table[row][col].cumulativeEnergy) offset = -1;
-            if (table[row][col + 1].cumulativeEnergy < table[row][col + offset].cumulativeEnergy) offset = 1;
-        }
-        return table[row][col + offset];
+        if (cumulativeEnergies[row][1] < cumulativeEnergies[row][0]) offset = 1;
+        return offset;
+    }
+
+    private int chooseLowestPredecessor(int row, int col) {
+        row = row - 1;
+        int offset = 0;
+        if (cumulativeEnergies[row][col - 1] < cumulativeEnergies[row][col]) offset = -1;
+        if (cumulativeEnergies[row][col + 1] < cumulativeEnergies[row][col + offset]) offset = 1;
+        return offset;
+    }
+
+    private int chooseLowestPredecessorAtRightmostCol(int row) {
+        row = row - 1;
+        int col = width - 1;
+        int offset = 0;
+        if (cumulativeEnergies[row][col - 1] < cumulativeEnergies[row][col]) offset = -1;
+        return offset;
     }
 
 }

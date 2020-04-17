@@ -1,17 +1,41 @@
 package domain.tables.seam;
 
-import domain.Pixel;
 import domain.tables.EnergyTable;
 
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.Comparator;
 
 public abstract class AbstractSeamTable extends EnergyTable {
-    Pixel[] lastPixels;
+    protected boolean[][] isRemoved;
+    protected int[][][] adjacentOffsets;
+    protected int[][][] predecessorOffsets;
+    protected int[][] cumulativeEnergies;
+    protected int[][] lowestPredecessorOffsets;
+    protected Integer lowestCumulativeEnergyIndex = null;
+    protected int lowestCumulativeEnergyValue = Integer.MAX_VALUE;
 
     public AbstractSeamTable(BufferedImage image) {
         super(image);
+        cumulativeEnergies = new int[height][width];
+        lowestPredecessorOffsets = new int[height][width];
+        initializeAdjacentAndPredecessorOffset();
+    }
+
+    private void initializeAdjacentAndPredecessorOffset() {
+        adjacentOffsets = new int[height][width][3];
+        predecessorOffsets = new int[height][width][3];
+        int[][] initialOffsetsRow = new int[width][3];
+        initialOffsetsRow[0] = new int[]{-1, 0, 1};
+        for (int i = 1; i < width; i += i)
+            System.arraycopy(initialOffsetsRow, 0, initialOffsetsRow, i, Math.min((width - i), i));
+        System.arraycopy(initialOffsetsRow, 0, adjacentOffsets[0], 0, width);
+        for (int i = 1; i < width; i += i)
+            System.arraycopy(adjacentOffsets, 0, adjacentOffsets, i, Math.min((width - i), i));
+        System.arraycopy(adjacentOffsets, 0, predecessorOffsets, 0, height);
+    }
+
+    final protected void checkIfCumulativeEnergyIsLowest(int cumulativeEnergy, int index) {
+        if (cumulativeEnergy < lowestCumulativeEnergyValue)
+            lowestCumulativeEnergyIndex = index;
     }
 
     public abstract void computeSeams();
@@ -19,25 +43,5 @@ public abstract class AbstractSeamTable extends EnergyTable {
     abstract public void removeSeams(int numberOfSeams);
 
     abstract public void addSeams(int numberOfSeams);
-
-    Pixel addToLastPixels(Pixel pixel, int i) {
-        return lastPixels[i] = pixel;
-    }
-
-    void connect(Pixel predecessor, Pixel pixel) {
-        pixel.cumulativeEnergy = pixel.energy + predecessor.cumulativeEnergy;
-        pixel.prev = predecessor;
-    }
-
-    void sortLastPixelsByCumulativeEnergy() {
-        Arrays.sort(lastPixels, Comparator.comparingInt(p -> p.cumulativeEnergy)); }
-
-    public int[][] getCumulativeEnergyArray() {
-        int[][] energies = new int[height][width];
-        for (int row = 0; row < height; row++)
-            for (int col = 0; col < width; col++)
-                energies[row][col] = get(row, col).cumulativeEnergy;
-        return energies;
-    }
 
 }
