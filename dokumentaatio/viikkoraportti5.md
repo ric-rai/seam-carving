@@ -13,7 +13,7 @@
 
 Olin aikeissa poistaa pikseli-luokan, kunnes totesin, ettei se ole järkevää. Pienenä ongelmana monimutkaiset ehtolauseet metodeissa vain sen tarkastamiseen, että onko käsiteltävänä reunapikseli. Päädyin ratkaisemaan tämän siirtymällä imperatiivisempaan tyyliin, jossa käydään taulu selkeästi vaihe vaiheelta läpi, eli siten, että ensin vasen yläkulma, sitten ylärivin pikselit, oikea yläkulma, sitten rivi kerrallaan, siten että ensimmäinen ja viimeinen sarakkeen käsitellään omissa vaiheissaan, ja niin edelleen...
 
-Saumojen poistamisen ja lisäämisen jälkeinen taulun koon muutos on tuottanut päänvaivaa. Kehittelin tähän ratkaisun System.arraycopy-metodia käyttävän ratkaisun, jonka pitäisi olla huomottavasti tehokkaampi, kuin koko taulukon kopiointi pienemmäksi pikseli pikseliltä. Tämän metodin toteuttaminen 
+Saumojen poistamisen ja lisäämisen jälkeinen taulun koon muutos on tuottanut päänvaivaa. Kehittelin tähän ratkaisun System.arraycopy-metodia käyttävän ratkaisun, jonka pitäisi olla huomattavasti tehokkaampi  kuin koko taulukon kopiointi pikseli pikseliltä. 
 
 Kokonaisuus on kuitenkin hahmottunut nyt aika hyvin ja luulen tietäväni miten edetä.
 
