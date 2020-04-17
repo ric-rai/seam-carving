@@ -27,7 +27,7 @@ Hyvin suunniteltu olisi puoliksi tehty :grin:
 
 Opin miten tarvittaessa vältetään ehtolauseiden käyttöä. Tällaista algoritmia toteuttaessa tuntuu turvallisimmalta edetä suoraviivaisesti vaihe vaiheelta mahdollisimman vähillä ehdoilla. Koodin luettavuus kärsii jonkin verran.
 
-Luin, että JVM-toteutukset optimoivat luokkien sisäisiä metodikutsuja, jos niitä kutsutaan miljoonia kertoja. Ilmeisesti "final" määree yläluokkien metodeissa voi edesauttaa optimointia.
+Luin, että JVM-toteutukset optimoivat luokkien sisäisiä metodikutsuja, jos niitä kutsutaan tarpeeksi monta kertaa. Ilmeisesti "final" määree yläluokkien metodeissa voi edesauttaa tätä.
 
 System.arraycopy on tarpeen kun pitää muunnella ja käsitellä taulukoita. Löysin mielenkiintoisen "binary fill" -algoritmin taulukon nopeaan alustamiseen:
 https://stackoverflow.com/questions/9128737/fastest-way-to-set-all-values-of-an-array
