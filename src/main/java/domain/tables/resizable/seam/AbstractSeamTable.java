@@ -17,14 +17,27 @@ public abstract class AbstractSeamTable extends EnergyTable {
     }
 
     final protected void checkIfCumulativeEnergyIsLowest(int cumulativeEnergy, int index) {
-        if (cumulativeEnergy < lowestCumulativeEnergyValue)
+        if (cumulativeEnergy < lowestCumulativeEnergyValue) {
             lowestCumulativeEnergyIndex = index;
+            lowestCumulativeEnergyValue = cumulativeEnergy;
+        }
     }
 
     public abstract void computeSeams();
 
-    abstract public void removeSeams(int numberOfSeams);
+    public void removeSeams(int numberOfSeams) {
+        for (int i = 0; i < numberOfSeams; i++) {
+            computeSeams();
+            removeSeam();
+            lowestCumulativeEnergyValue = Integer.MAX_VALUE;
+            lowestCumulativeEnergyIndex = null;
+        }
+    }
 
-    abstract public void addSeams(int numberOfSeams);
+    //abstract public void addSeams(int numberOfSeams);
+
+    abstract protected void removeSeam();
+
+    //abstract protected void addSeam();
 
 }
