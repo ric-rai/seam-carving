@@ -3,10 +3,10 @@
 ## Edistyminen
 
 * Vertaisarviointi tehty.
-* Yksi geneerinen taulu-tietorakenne tehty valmiiksi ja otettu käyttöön algoritmissa.
+* Yksi geneerinen taulu-tietorakenne tehty valmiiksi asti ja otettu käyttöön algoritmissa.
 * Toteutettu suorituskykytesti tietorakenteelle.
 * Koodin uudelleenjärjestely on valmis.
-* Aloitettu muiden versioiden koodaaminen.
+* Aloitettu muiden versioiden koodaaminen (tietorakenteenaan verkkoa käyttävien).
 * Yksikkötestejä paranneltu. 
 
 ## Ongelmia
