@@ -1,9 +1,5 @@
 package domain.tables.resizable;
 
-import domain.Pixel;
-
-import java.util.Arrays;
-
 public class AbstractSeamTableTest {
     //AbstractSeamTable seamTable;
     int[][] fakeEnergies =

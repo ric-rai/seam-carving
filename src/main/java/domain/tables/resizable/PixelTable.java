@@ -18,11 +18,14 @@ public class PixelTable extends ResizableTable<Integer[]> {
     public PixelTable(BufferedImage image) {
         super(Integer[].class, image.getWidth(), image.getHeight());
         this.image = image;
-        if (image.getType() == TYPE_3BYTE_BGR) setRgbValuesFromThreeByteBgrImage();
-        else setRgbValuesFromImage();
     }
 
-    private void setRgbValuesFromImage() {
+    protected void setRgbValuesFromImage() {
+        if (image.getType() == TYPE_3BYTE_BGR) setRgbValuesFromThreeByteBgrImage();
+        else setRgbValuesUsingGeneralMethod();
+    }
+
+    private void setRgbValuesUsingGeneralMethod() {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 int argbInt = image.getRGB(col, row);
@@ -45,6 +48,18 @@ public class PixelTable extends ResizableTable<Integer[]> {
                 pixels[row][col][blue] = bytes[collapsedIndex * 3] & 0xFF;
             }
         }
+    }
+
+    public int getRed(int row, int col) {
+        return get(row, col)[red];
+    }
+
+    public int getGreen(int row, int col) {
+        return get(row, col)[green];
+    }
+
+    public int getBlue(int row, int col) {
+        return get(row, col)[blue];
     }
 
 }

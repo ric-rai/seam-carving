@@ -23,8 +23,10 @@ public class PixelTableTest {
     @Test
     public void rgbValuesWorkCorrectly() {
         pixelTestTable = new PixelTestTable(getImageFromRgbArray(rgbValues, width, height, TYPE_INT_ARGB));
+        pixelTestTable.setRgbValuesFromImage();
         assertThat(pixelTestTable.getRgbArray(), is(rgbValues));
         pixelTestTable = new PixelTestTable(getImageFromRgbArray(rgbValues, width, height, TYPE_3BYTE_BGR));
+        pixelTestTable.setRgbValuesFromImage();
         assertThat(pixelTestTable.getRgbArray(), is(rgbValues));
     }
 

@@ -7,6 +7,7 @@ public class RecomputingVerticalSeamTable extends AbstractSeamTable {
 
     public RecomputingVerticalSeamTable(BufferedImage image) {
         super(image);
+        setRgbValuesFromImage();
     }
 
     @Override

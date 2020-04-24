@@ -1,12 +1,5 @@
 package domain;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static utilities.TestUtils.getArgbIntFromRgbValues;
-
 /*
 public class PixelTest {
     Pixel testPixel;

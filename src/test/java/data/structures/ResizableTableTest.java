@@ -7,7 +7,6 @@ import java.lang.reflect.Array;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
-import static utilities.TestUtils.getException;
 
 public class ResizableTableTest {
     ResizableTestTable<Boolean> testTable;
@@ -34,8 +33,8 @@ public class ResizableTableTest {
     @Test
     public void constructorWorksCorrectly() {
         testTable = new ResizableTestTable<>(Boolean.class, width, height);
-        assertThat(testTable.getWidth(), is(2));
-        assertThat(testTable.getHeight(), is(3));
+        assertThat(testTable.getWidth(), is(3));
+        assertThat(testTable.getHeight(), is(4));
         assertThat(testTable.getArray(), equalTo(new Boolean[height][width]));
     }
 

@@ -20,13 +20,14 @@ public class ContentAwareImageScaler implements ImageScaler {
         RecomputingVerticalSeamTable seamTable = new RecomputingVerticalSeamTable(image);
         if (outputWidth < image.getWidth()) {
             seamTable.removeSeams(image.getWidth() - outputWidth);
-            //Pixel[][] pixels = seamTable.getPixelArray();
             BufferedImage scaledImage = new BufferedImage(outputWidth, image.getHeight(), BufferedImage.TYPE_INT_RGB);
             for (int row = 0; row < image.getHeight(); row++) {
                 for (int col = 0; col < outputWidth; col++) {
-                    //Pixel pixel = pixels[row][col];
-                    //int rgb = (((pixel.red << 8) + pixel.green) << 8) + pixel.blue;
-                    //scaledImage.setRGB(col, row, rgb);
+                    int red = seamTable.getRed(row, col);
+                    int green = seamTable.getGreen(row, col);
+                    int blue = seamTable.getBlue(row, col);
+                    int rgb = (((red << 8) + green) << 8) + blue;
+                    scaledImage.setRGB(col, row, rgb);
                 }
             }
             return scaledImage;

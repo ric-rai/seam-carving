@@ -6,7 +6,6 @@ import org.junit.Test;
 import java.lang.reflect.Array;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static utilities.TestUtils.getException;
 
