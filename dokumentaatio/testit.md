@@ -14,7 +14,7 @@ ResizableTable-tietorakennetta testaan yksinkertaisemmin toteuteuttua SimpleResi
 
 ## Laadun testaaminen
 
-Tällä hetkellä algoritmilla voi skaalata kuvia leveyssuunnassa pienemmäksi. Alla on ensimmäisiä tuloksia helpoilla kuvilla. Kumpikin kuva skaalattiin alkuperäisestä 1000 px leveyteen.
+Tällä hetkellä algoritmilla voi skaalata kuvia leveyssuunnassa pienemmäksi. Alla on ensimmäisiä tuloksia helpoilla kuvilla. Kumpikin kuva skaalattiin leveydeltään puolet pienemmäksi.
 
 ![original beach](../jar/beach.jpg)
 
