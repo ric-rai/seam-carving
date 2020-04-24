@@ -8,6 +8,23 @@ Merkintöjen yksinkertaistamiseksi aikavaativuutta käsitellään olettamalla, e
 
 Algoritmin aikavaativuus eri toteutuksilla on aina luokkaa O(n^2), jos ei käytetä rinnakkaisohjelmointia.
 
+## Tietorakenteet
+
+### ResizableTable
+Projektia varten toteutettiin yksi geneerinen tietorakenne ResizableTable. Tietorakenteen idea on mahdollistaa kaksiulotteisen taulukon mahdollisimman tehokas pienentäminen tai suurentaminen vaaka- ja pystysuunnassa.
+
+Sisäisesti luokka ylläpitää tietoa taulukon koon muutoksista kahden indeksitaulukon avulla, joihin se päivittää koon muutoksen myötä muuttuvia rivi- ja sarakeindeksejä.
+
+Taulukon kopiointia manuaalisesti silmukalla vältetään, ja sen sijaan käytetään System.arraycopy()-metodia. Koska Javassa kaksiulotteinen taulukko ei ole muistissa yhtenäisenä, niin siirryttäessä pysty- tai vaakasuuntaisesta koon muutoksesta päinvastaiseen transponoidaan taulukko luokan sisällä. Tämä tietorakenne toimii siis nopeasti vain jos kaikki samansuuntaiset koon muutokset tehdään aina peräkkäin.
+
+Toinen vaihtoehto luokan toteuttamiselle olisi ollut pitää taulukkoa muistissa yksiulotteisena. Oletin nyt, että tällainen toteutus ei olisi ollut yhtä nopea. Jos System.arraycopy(), tai ylipäätään taulukon yhtenäisten lohkojen siirtely muistissa on vakioaikaista, niin siinä tapauksessa tämä toteutustapa olisi paras.
+
+Tietorakenteen suorituskyvyn varmistamiseksi loin testaushakemistoon SimpleResizableTable-luokan, jonka toteutus on hyvin yksinkertainen, mutta ResizableTable luokkaa vastaava. Siinä käytetään vain yksinkertaisia for-silmukoita taulukon koon muuttamiseksi. Suorituskykytestissä ResizableTable oli noin kolme kertaa nopeampi.
+
+### Verkkorakenteet
+
+
+
 ## Pääluokat
 
 ### Pixel

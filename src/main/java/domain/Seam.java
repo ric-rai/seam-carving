@@ -1,8 +1,8 @@
 package domain;
 
-import data.structures.AbstractTable;
+import data.structures.ResizableTable;
 
 public class Seam {
-    AbstractTable<Integer> pixelPositions;
+    ResizableTable<Integer> pixelPositions;
 
 }

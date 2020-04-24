@@ -1,14 +1,19 @@
-package domain.tables.seam;
+package domain.tables.resizable;
 
 import domain.Pixel;
 
 import java.util.Arrays;
 
 public class AbstractSeamTableTest {
-    AbstractSeamTable seamTable;
-    int[][] energies =
-            new int[][]{{1, 4, 3, 5, 2}, {3, 2, 5, 2, 3}, {5, 2, 4, 2, 1}};
+    //AbstractSeamTable seamTable;
+    int[][] fakeEnergies =
+            new int[][]{
+                    {1, 4, 3, 5, 2},
+                    {3, 2, 5, 2, 3},
+                    {5, 2, 4, 2, 1}
+    };
 
+/*
     void setSeamPixels(Pixel[] seamPixels, int seamIndex) {
         seamPixels[0] = seamTable.lastPixels[seamIndex];
         for (int i = 1; i < seamPixels.length; i++)
@@ -21,17 +26,18 @@ public class AbstractSeamTableTest {
                 .toArray(Integer[][]::new);
     }
 
-    /**
+   /**
      * @param row index
      * @param col index
      * @return new Integer[]{row, col}
      */
+
+/*
     Integer[] rc(int row, int col) {
         return new Integer[]{row, col};
     }
 
     Integer[][] positions(Integer[]... ints) {
         return ints;
-    }
-
+    }*/
 }

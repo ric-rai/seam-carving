@@ -25,10 +25,6 @@ public interface Table<E> {
      */
     void set(int row, int col, E e);
 
-    void removeVertically(int[] indexes);
-
-    void removeHorizontally(int[] indexes);
-
     /**
      * @return Width of the table
      */

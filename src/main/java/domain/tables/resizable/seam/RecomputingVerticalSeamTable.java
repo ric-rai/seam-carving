@@ -1,6 +1,6 @@
-package domain.tables.seam;
+package domain.tables.resizable.seam;
 
-import domain.Pixel;
+import domain.tables.resizable.seam.AbstractSeamTable;
 
 import java.awt.image.BufferedImage;
 
@@ -20,8 +20,8 @@ public class RecomputingVerticalSeamTable extends AbstractSeamTable {
 
     @Override
     public void removeSeams(int numberOfSeams) {
-        computeSeams();
         for (int i = 0; i < numberOfSeams; i++) {
+            computeSeams();
             removeSeam();
         }
     }
@@ -30,60 +30,39 @@ public class RecomputingVerticalSeamTable extends AbstractSeamTable {
     public void addSeams(int numberOfSeams) {
     }
 
-    void removeSeam() {
-        Pixel pixel = lastPixels[0];
-        for (int i = 0; i < height; i++) {
-            //System.out.println("row: " + pixel.row + " - col: " + pixel.col);
-            table[pixel.row][pixel.col] = null;
-            pixel = pixel.prev;
+    private void removeSeam() {
+        int[] indexes = new int[height];
+        indexes[height - 1] = get(height - 1, lowestCumulativeEnergyIndex)[lowestPredecessorOffset];
+        for (int row = height - 2; row > 0; row--) {
+            Integer[] previousPixel = get(row + 1, indexes[row + 1]);
+            int col = indexes[row + 1] + previousPixel[lowestPredecessorOffset];
+            indexes[row] = col;
         }
-        resetTable();
-    }
-
-    void resetTable() {
-        Pixel[][] newTable = new Pixel[height][width - 1];
-        for (int row = 0; row < height; row++) {
-            int offset = 0;
-            for (int col = 0; col < width - 1; col++) {
-                if (offset == 0 && table[row][col] == null) offset = 1;
-                Pixel pixel = table[row][col + offset];
-                newTable[row][col] = pixel;
-                pixel.row = row;
-                pixel.col = col;
-            }
-        }
-        table = newTable;
-        width -= 1;
+        removeVertically(indexes);
     }
 
     private void computeFirstRow() {
-        rgbValues.set(0, 0);
         computeDualGradientEnergyForLeftTopCorner();
-        cumulativeEnergies[0][0] = energies[0][0];
+        get(0, 0)[cumulativeEnergy] = get(0, 0)[energy];
         for (int col = 1; col < width - 1; col++) {
-            rgbValues.set(0, col);
             computeDualGradientEnergyForTopRow(col);
-            cumulativeEnergies[0][col] = energies[0][col];
+            get(0, col)[cumulativeEnergy] = get(0, col)[energy];
         }
-        rgbValues.set(0, width - 1);
         computeDualGradientEnergyForRightTopCorner();
-        cumulativeEnergies[0][width - 1] = energies[0][width - 1];
+        get(0, width - 1)[cumulativeEnergy] = get(0, width - 1)[energy];
     }
 
     private void computeRowsFromSecondToSecondLast() {
         for (int row = 1; row < height - 1; row++) {
             //Leftmost pixels
-            rgbValues.set(row, 0);
             computeDualGradientEnergyForLeftmostCol(row);
             connect(row, 0, chooseLowestPredecessorAtLeftmostCol(row));
             //Middle pixels
             for (int col = 1; col < width - 1; col++) {
-                rgbValues.set(row, col);
                 computeDualGradientEnergy(row, col);
                 connect(row, col, chooseLowestPredecessor(row, col));
             }
             //Rightmost pixels
-            rgbValues.set(row, width - 1);
             computeDualGradientEnergyForRightmostCol(row);
             connect(row, width - 1, chooseLowestPredecessorAtRightmostCol(row));
         }
@@ -92,41 +71,38 @@ public class RecomputingVerticalSeamTable extends AbstractSeamTable {
     private void computeLastRow() {
         int row = height - 1;
         //Left corner pixel
-        rgbValues.set(row, 0);
         computeDualGradientEnergyForLeftBottomCorner();
         connect(row, 0, chooseLowestPredecessorAtLeftmostCol(row));
-        checkIfCumulativeEnergyIsLowest(cumulativeEnergies[row][0], 0);
+        checkIfCumulativeEnergyIsLowest(get(row, 0)[cumulativeEnergy], 0);
         //Middle pixels
         for (int col = 1; col < width - 1; col++) {
-            rgbValues.set(row, col);
             computeDualGradientEnergyForBottomRow(col);
             connect(row, col, chooseLowestPredecessor(row, col));
-            checkIfCumulativeEnergyIsLowest(cumulativeEnergies[row][col], col);
+            checkIfCumulativeEnergyIsLowest(get(row, col)[cumulativeEnergy], col);
         }
         //Right corner pixel
-        rgbValues.set(row, width - 1);
         computeDualGradientEnergyForRightBottomCorner();
         connect(row, width - 1, chooseLowestPredecessorAtRightmostCol(row));
-        checkIfCumulativeEnergyIsLowest(cumulativeEnergies[row][width - 1], width - 1);
+        checkIfCumulativeEnergyIsLowest(get(row, width - 1)[cumulativeEnergy], width - 1);
     }
 
-    void connect(int row, int col, int offset) {
-        lowestPredecessorOffsets[row][col] = offset;
-        cumulativeEnergies[row][col] = energies[row][col] + energies[row + offset][col];
+    private void connect(int row, int col, int offset) {
+        get(row, col)[lowestPredecessorOffset] = offset;
+        get(row, col)[cumulativeEnergy] = get(row, col)[energy] + get(row - 1, col + offset)[energy];
     }
 
     private int chooseLowestPredecessorAtLeftmostCol(int row) {
         row = row - 1;
         int offset = 0;
-        if (cumulativeEnergies[row][1] < cumulativeEnergies[row][0]) offset = 1;
+        if (get(row, 1)[cumulativeEnergy] < get(row, 0)[cumulativeEnergy]) offset = 1;
         return offset;
     }
 
     private int chooseLowestPredecessor(int row, int col) {
         row = row - 1;
         int offset = 0;
-        if (cumulativeEnergies[row][col - 1] < cumulativeEnergies[row][col]) offset = -1;
-        if (cumulativeEnergies[row][col + 1] < cumulativeEnergies[row][col + offset]) offset = 1;
+        if (get(row, col - 1)[cumulativeEnergy] < get(row, col)[cumulativeEnergy]) offset = -1;
+        if (get(row, col + 1)[cumulativeEnergy] < get(row, col + offset)[cumulativeEnergy]) offset = 1;
         return offset;
     }
 
@@ -134,7 +110,7 @@ public class RecomputingVerticalSeamTable extends AbstractSeamTable {
         row = row - 1;
         int col = width - 1;
         int offset = 0;
-        if (cumulativeEnergies[row][col - 1] < cumulativeEnergies[row][col]) offset = -1;
+        if (get(row, col - 1)[cumulativeEnergy] < get(row, col)[cumulativeEnergy]) offset = -1;
         return offset;
     }
 

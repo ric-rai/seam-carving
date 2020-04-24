@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static utilities.TestUtils.getArgbIntFromRgbValues;
 
+/*
 public class PixelTest {
     Pixel testPixel;
 
@@ -46,3 +47,4 @@ public class PixelTest {
     }
 
 }
+*/

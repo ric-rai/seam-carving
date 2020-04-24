@@ -3,17 +3,18 @@ package domain;
 public class Pixel {
     public int red, green, blue;
     public int row, col;
+    public Pixel left, above, right, below;
     public int energy, cumulativeEnergy;
     public Pixel prev;
 
     public Pixel() {}
 
-    public Pixel(int row, int col, int red, int green, int blue) {
+    public Pixel(int row, int col) {
         setColors(red, green, blue);
         setPosition(row, col);
     }
 
-    public Pixel(int row, int col, int argbInt) {
+    /*public Pixel(int row, int col, int argbInt) {
         setColors((argbInt & 0xff0000) >> 16, (argbInt & 0xff00) >> 8, argbInt & 0xff);
         setPosition(row, col);
     }
@@ -21,7 +22,7 @@ public class Pixel {
     public Pixel(int row, int col, byte red, byte green, byte blue) {
         setColors(red & 0xff, green & 0xff, blue & 0xff);
         setPosition(row, col);
-    }
+    }*/
 
     private void setColors(int red, int green, int blue) {
         this.red = red;

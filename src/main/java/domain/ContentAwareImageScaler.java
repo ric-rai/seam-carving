@@ -1,6 +1,6 @@
 package domain;
 
-import domain.tables.seam.RecomputingVerticalSeamTable;
+import domain.tables.resizable.seam.RecomputingVerticalSeamTable;
 
 import java.awt.image.BufferedImage;
 
