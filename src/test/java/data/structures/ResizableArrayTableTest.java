@@ -9,9 +9,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static utilities.TestUtils.getException;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class SimpleResizableTableTest {
-    SimpleResizableTestTable<Boolean> testTable;
+public class ResizableArrayTableTest {
+    ResizableArrayTestTable<Boolean> testTable;
     int width, height;
     final boolean[][] testArray = new boolean[][]{
             {false, true, false},
@@ -24,7 +23,7 @@ public class SimpleResizableTableTest {
     public void setTestTable() {
         width = testArray[0].length;
         height = testArray.length;
-        testTable = new SimpleResizableTestTable<>(Boolean.class, width, height);
+        testTable = new ResizableArrayTestTable<>(Boolean.class, width, height);
         Boolean[][] booleans = new Boolean[height][width];
         for (int row = 0; row < height; row++)
             for (int col = 0; col < width; col++)
@@ -34,38 +33,16 @@ public class SimpleResizableTableTest {
 
     @Test
     public void constructorWorksCorrectly() {
-        testTable = new SimpleResizableTestTable<>(Boolean.class, width, height);
+        testTable = new ResizableArrayTestTable<>(Boolean.class, width, height);
         assertThat(testTable.getWidth(), is(width));
         assertThat(testTable.getHeight(), is(height));
         assertThat(testTable.getArray(), is(new Boolean[height][width]));
     }
 
     @Test
-    public void getWorksCorrectly() {
-        for (int row = 0; row < height; row++)
-            for (int col = 0; col < width; col++)
-                assertThat(testTable.get(row, col), is(testArray[row][col]));
-        assertThat(getException(() -> testTable.get(height, 0)), instanceOf(ArrayIndexOutOfBoundsException.class));
-        assertThat(getException(() -> testTable.get(0, width)), instanceOf(ArrayIndexOutOfBoundsException.class));
-    }
-
-    @Test
-    public void setWorksCorrectly() {
-        Boolean[][] inverted = new Boolean[height][width];
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
-                testTable.set(row, col, !testArray[row][col]);
-                inverted[row][col] = !testArray[row][col];
-            }
-        }
-        assertThat(testTable.getArray(), equalTo(inverted));
-        assertThat(getException(() -> testTable.set(height, 0, true)), instanceOf(ArrayIndexOutOfBoundsException.class));
-        assertThat(getException(() -> testTable.set(0, width, true)), instanceOf(ArrayIndexOutOfBoundsException.class));
-    }
-
-    @Test
     public void removeVerticallyWorksCorrectly() {
         testTable.removeVertically(new int[]{0, 1, 0, 1});
+        assertThat(testTable.width, is(width - 1));
         Boolean[][] resizedArray = testTable.getResizedTableAsArray();
         assertThat(resizedArray, is(new Boolean[][]{{true, false}, {true, true}, {true, false}, {true, true}}));
     }
@@ -86,6 +63,14 @@ public class SimpleResizableTableTest {
     public void removeHorizontallyWorksCorrectlyAfterRemoveVertically() {
         testTable.removeVertically(new int[]{0, 1, 0, 1});
         testTable.removeHorizontally(new int[]{1, 0});
+        Boolean[][] resizedArray = testTable.getResizedTableAsArray();
+        assertThat(resizedArray, is(new Boolean[][]{{true, true}, {true, false}, {true, true}}));
+    }
+
+    @Test
+    public void removeVerticallyWorksCorrectlyAfterRemoveHorizontally() {
+        testTable.removeHorizontally(new int[]{0, 1, 0});
+        testTable.removeVertically(new int[]{1, 0, 1});
         Boolean[][] resizedArray = testTable.getResizedTableAsArray();
         assertThat(resizedArray, is(new Boolean[][]{{true, true}, {true, false}, {true, true}}));
     }
@@ -132,11 +117,34 @@ public class SimpleResizableTableTest {
             testTable.duplicateHorizontally(horizontalIndexes);
     }
 
+    @Test
+    public void getWorksCorrectly() {
+        for (int row = 0; row < height; row++)
+            for (int col = 0; col < width; col++)
+                assertThat(testTable.get(row, col), is(testArray[row][col]));
+        assertThat(getException(() -> testTable.get(height, 0)), instanceOf(ArrayIndexOutOfBoundsException.class));
+        assertThat(getException(() -> testTable.get(0, width)), instanceOf(ArrayIndexOutOfBoundsException.class));
+    }
+
+    @Test
+    public void setWorksCorrectly() {
+        Boolean[][] inverted = new Boolean[height][width];
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                testTable.set(row, col, !testArray[row][col]);
+                inverted[row][col] = !testArray[row][col];
+            }
+        }
+        assertThat(testTable.getArray(), equalTo(inverted));
+        assertThat(getException(() -> testTable.set(height, 0, true)), instanceOf(ArrayIndexOutOfBoundsException.class));
+        assertThat(getException(() -> testTable.set(0, width, true)), instanceOf(ArrayIndexOutOfBoundsException.class));
+    }
+
     @SuppressWarnings("unchecked")
-    private static class SimpleResizableTestTable<E> extends SimpleResizableTable<E> {
+    private static class ResizableArrayTestTable<E> extends ResizableArrayTable<E> {
         final Class<E> eClass;
 
-        public SimpleResizableTestTable(Class<E> eClass, int width, int height) {
+        public ResizableArrayTestTable(Class<E> eClass, int width, int height) {
             super(eClass, width, height);
             this.eClass = eClass;
         }

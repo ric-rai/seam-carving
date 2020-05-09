@@ -9,6 +9,7 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class CommandLineArgumentsTest {
     private final Integer EXPECTED_NUMBER_OF_ARGUMENTS = 4;
     private final String TEST_IMAGE_PATH = "src/test/resources/test_image.jpg";

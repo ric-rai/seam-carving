@@ -4,11 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ResizableTablePerformanceTest {
-    int width = 1920, height = 1080;
-    ResizableTable<Integer> resizableTable = new ResizableTable<>(Integer.class, width, height);
-    SimpleResizableTable<Integer> simpleResizableTable = new SimpleResizableTable<>(Integer.class, width, height);
-    int[] verticalIndexes = new int[height];
-    int[] horizontalIndexes = new int[width / 2];
+    final int width = 1920;
+    final int height = 1080;
+    final ResizableArrayTable<Integer> resizableTable = new ResizableArrayTable<>(Integer.class, width, height);
+    final SimpleResizableTable<Integer> simpleResizableTable = new SimpleResizableTable<>(Integer.class, width, height);
+    final int[] verticalIndexes = new int[height];
+    final int[] horizontalIndexes = new int[width];
 
     @Before
     public void setIndexes() {
@@ -25,15 +26,23 @@ public class ResizableTablePerformanceTest {
     @Test
     public void comparisonTest() {
         long first = System.currentTimeMillis();
-        for (int i = 0; i < width / 2; i++)
+        for (int i = 0; i < width / 4; i++)
             resizableTable.removeVertically(verticalIndexes);
-        for (int i = 0; i < height / 2; i++)
+        for (int i = 0; i < width / 4; i++)
+            resizableTable.duplicateVertically(verticalIndexes);
+        for (int i = 0; i < height / 4; i++)
             resizableTable.removeHorizontally(horizontalIndexes);
+        for (int i = 0; i < height / 4; i++)
+            resizableTable.duplicateHorizontally(horizontalIndexes);
         long second = System.currentTimeMillis();
-        for (int i = 0; i < width / 2; i++)
+        for (int i = 0; i < width / 4; i++)
             simpleResizableTable.removeVertically(verticalIndexes);
-        for (int i = 0; i < height / 2; i++)
+        for (int i = 0; i < width / 4; i++)
+            simpleResizableTable.duplicateVertically(verticalIndexes);
+        for (int i = 0; i < height / 4; i++)
             simpleResizableTable.removeHorizontally(horizontalIndexes);
+        for (int i = 0; i < height / 4; i++)
+            simpleResizableTable.duplicateHorizontally(horizontalIndexes);
         long third = System.currentTimeMillis();
         System.out.println("Resizable table: " + (second - first));
         System.out.println("Simple resizable table: " + (third - second));

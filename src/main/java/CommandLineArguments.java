@@ -9,6 +9,7 @@ import java.io.IOException;
  * argument to the actual data object (for example [path to image file] to java.awt.Image object).
  */
 public class CommandLineArguments {
+    @SuppressWarnings("FieldCanBeLocal")
     private final String usage =
             "Usage: SeamCarving [path to image file] [output width] [output height] [path to output file]";
     private String[] args;
@@ -64,7 +65,6 @@ public class CommandLineArguments {
     private boolean outputFilePathIsValid() {
         outputFile = new File(args[3]);
         return true;
-        //validationErrorMessage = "Error: Invalid output file path.";
     }
 
     public String getUsage() {

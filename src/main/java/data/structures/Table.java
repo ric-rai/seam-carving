@@ -4,7 +4,7 @@ package data.structures;
  * Matrix like two dimensional table structure. The user of this interface has precise control over where in the table
  * each element is inserted. The user can access elements by their integer coordinates (position in the table).
  *
- * @param <E> Type of elements in this table
+ * @param <E> Type of elements in table
  */
 public interface Table<E> {
 

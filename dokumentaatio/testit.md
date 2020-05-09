@@ -1,26 +1,37 @@
 ## Yksikkötestit
 
-Käytössä on PIT-mutaatiotestaus. Jokaiselle luokalle pyrin tekemään mahdollisimman kattavat luokkakohtaiset testit.
+Käytössä on PIT-mutaatiotestaus. Jokaiselle luokalle on pyritty tekemään mahdollisimman kattavat luokkakohtaiset testit.
 
 ## Suorituskykytestit
 
 ### ResizableTable
 
-ResizableTable-tietorakennetta testaan yksinkertaisemmin toteuteuttua SimpleResizableTable-tietorakennetta vastaan. Saamani tulokset testillä (ResizableTablePerformanceTest), jossa skaalataan 1920x1080 kokoinen taulukko puolet pienemmäksi olivat keskimäärin seuraavat: 
+ResizableTable-tietorakennetta testaan yksinkertaisemmin toteuteuttua SimpleResizableTable-tietorakennetta vastaan. Saamani tulokset testillä (ResizableTablePerformanceTest), jossa skaalataan 1920x1080 kokoinen taulukko ensin puolet pienemmäksi ja sitten takaisin alkuperäiseen kokoon, olivat keskimäärin seuraavat: 
 
 | ResizableTable | SimpleResizableTable|
 |----------|-------------|
-| 2258 ms | 6566 ms |
+| 3107 ms | 9142 ms |
 
-## Laadun testaaminen
+### Verkko- ja taulukkototeutusten suorituskyky
 
-Tällä hetkellä algoritmilla voi skaalata kuvia leveyssuunnassa pienemmäksi. Alla on ensimmäisiä tuloksia helpoilla kuvilla. Kumpikin kuva skaalattiin leveydeltään puolet pienemmäksi.
+RecomputingVerticalSeamTable ja RecomputingVerticalSeamGraph -luokkien suorituskykyä vertaillaan ScalingPerformanceTest -testissä, jossa testikuvaa pienennetään puolet pienemmäksi leveyssuunnassa. Verkkototeutus toimii odotetusti nopeammin kuin taulukkototeutus. Ero oli suurempi kuin oletin.
 
-![original beach](../jar/beach.jpg)
+| Taulukko | Verkko|
+|----------|-------------|
+| 14912 ms | 2206 ms |
 
-![original beach](../jar/beach_scaled.png)
 
-![original beach](../jar/tower.jpg)
+## Skaalaustulos
 
-![original beach](../jar/tower_scaled.png)
+Alkuperäinen kuva:
+
+![original arch](../jar/arch.jpg)
+
+Skaalattu puolet pienemmäksi leveyssuunnassa:
+
+![arch](../jar/arch_half_width.png)
+
+Skaalattu puolet suuremmaksi leveyssuunnassa:
+
+![arch](../jar/arch_one_and_a_half_width.png)
 
